@@ -1,0 +1,16 @@
+.footer {
+    .footer-content {
+      p {
+        @apply text-gray-400;
+      }
+  
+      .social-media {
+        @apply mt-4 flex justify-center space-x-4;
+  
+        a {
+          @apply text-white no-underline hover:text-gray-400;
+        }
+      }
+    }
+  }
+  

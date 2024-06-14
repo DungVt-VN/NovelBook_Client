@@ -1,0 +1,13 @@
+.header {
+    @apply relative h-80 bg-cover bg-center flex items-center justify-center;
+    background-image: url('https://your-image-url.com/header-bg.jpg');
+  
+    .overlay {
+      @apply absolute inset-0 bg-black;
+    }
+  
+    .headerContent {
+      @apply relative text-center;
+    }
+  }
+  
