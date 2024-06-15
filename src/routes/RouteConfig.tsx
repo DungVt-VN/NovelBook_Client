@@ -2,6 +2,7 @@ import React from 'react';
 import Home from '../pages/home/Home';
 import Followed from '../pages/followed/Followed';
 import NotFound from '../pages/notFound/NotFound';
+import BookDetail from '../components/bookdetail/BookDetail';
 
 interface Route {
   path: string;
@@ -18,7 +19,12 @@ const RouteConfig: Route[] = [
   {
     path: '/followed',
     component: <Followed />,
-    isPrivate: true,
+    isPrivate: false,
+  },
+  {
+    path: '/book/:id',
+    component: <BookDetail />,
+    isPrivate: false,
   },
   {
     path: '*',

@@ -1,19 +1,6 @@
 .item-book-detail {
-    position: fixed; // Use fixed position for the pop-up to adjust according to the mouse
-    z-index: 1000;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-    max-width: 300px; // Adjust the maximum width of the pop-up
-
-    &.visible {
-        visibility: visible;
-        opacity: 1;
-    }
+    @apply bg-white p-4 drop-shadow-lg;
+    font-size: 15px;
 
     .detail-header {
         display: flex;

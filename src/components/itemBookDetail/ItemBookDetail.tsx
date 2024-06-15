@@ -4,17 +4,11 @@ import { BookDetail } from '../../services/models/BookDetail';
 
 interface ItemBookDetailProps {
     item: BookDetail;
-    position: { top: number, left: number };
-    visible: boolean;
-    height: number;
 }
 
-const ItemBookDetail: React.FC<ItemBookDetailProps> = ({ item, position, visible, height }) => {
+const ItemBookDetail: React.FC<ItemBookDetailProps> = ({ item }) => {
     return (
-        <div
-            className={`item-book-detail ${visible ? 'visible' : 'invisible'} absolute bg-white border shadow-lg p-4`}
-            style={{ top: position.top, left: position.left, height: height }}
-        >
+        <div className='item-book-detail'>
             <div className="detail-header flex items-center">
                 <img src={item.coverImage} alt={item.name} className="detail-image w-24 h-32 object-cover mr-4" />
                 <div className="detail-title font-bold text-xl">{item.name}</div>

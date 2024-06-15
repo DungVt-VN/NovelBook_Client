@@ -1,47 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import './ItemBook.scss';
+import { BookDetail } from '../../services/models/BookDetail';
+import ItemBookDetail from '../itemBookDetail/ItemBookDetail';
+import { Link } from 'react-router-dom';
 
 interface Chapter {
     number: number;
     time: string;
 }
 
-interface DataType {
-    bookId: number;
-    name: string;
-    coverImage: string;
-    status: string;
-    currentChapter: number;
-    description: string;
-    author: string;
-    voted: number;
-    rating: number;
-    liked: number;
-    viewed: number;
-    followed: number;
-    commented: number;
-    categories: string[] | null;
-}
-
 interface ItemBookProps {
-    item: DataType;
+    item: BookDetail;
 }
 
 const ItemBook: React.FC<ItemBookProps> = ({ item }) => {
-    const [isAdjusted, setIsAdjusted] = useState(false);
-    const testRef = useRef<HTMLDivElement>(null);
     const [isHidden, setIsHidden] = useState(false);
 
-    useEffect(() => {
-        if (testRef.current) {
-            const rect = testRef.current.getBoundingClientRect();
-            if (rect.right > window.innerWidth) {
-                setIsAdjusted(true);
-            } else {
-                setIsAdjusted(false);
-            }
-        }
-    }, [isHidden]);
+
 
     const chapters: Chapter[] = [
         { number: 1, time: '1 ngày trước' },
@@ -63,24 +38,27 @@ const ItemBook: React.FC<ItemBookProps> = ({ item }) => {
     return (
         <div className="list__box">
             {isHidden && (
-                <div
-                    className={`test ${isAdjusted ? 'adjust-right' : ''}`}
-                    ref={testRef}
-                >
-                    test
+                <div className='test'>
+                    <div className='w-44 h-100 detail-left' />
+                    <div className="detail-right z-10">
+                        <ItemBookDetail item={item} />
+                    </div>
                 </div>
             )}
-            <div
-                className="image__box"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            >
-                <img src={item.coverImage} alt={item.name} className="image" />
-                <div className="viewed">day la thu nghiem</div>
-            </div>
-            <div className="manga-title">
-                <p>{item.name}</p>
-            </div>
+            <Link to={`/book/${item.bookId}`}>
+                <div
+                    className="image__box"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    <img src={item.coverImage} alt={item.name} className="image" />
+                    <div className="viewed">day la thu nghiem</div>
+                </div>
+
+                <div className="manga-title">
+                    <p>{item.name}</p>
+                </div>
+            </Link>
             {displayedChapters.map((chapter, index) => (
                 <div className="chapter-info" key={index}>
                     <div className="left">
