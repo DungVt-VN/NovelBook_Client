@@ -1,37 +1,29 @@
 .list__box {
     @apply w-44 h-auto bg-green-600 m-3 justify-between relative;
+}
 
-    .image__box {
-        @apply min-w-max bg-purple-400/45 relative;
-        min-height: 220px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
+.image__box {
+    @apply min-w-max bg-purple-400/45 relative min-h-[220px] flex justify-center items-center overflow-hidden;
 
-        .image {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 8px;
-        }
+    .image {
+        @apply w-24;
     }
+}
 
-    .viewed {
-        @apply absolute w-full bg-green-400 bottom-0 text-gray-600 text-center opacity-50 py-1 text-sm;
+.viewed {
+    @apply absolute w-full bg-green-400 bottom-0 text-gray-600 text-center opacity-50 py-1 text-sm;
+}
+
+.manga-title {
+    @apply bg-slate-200 p-2 text-gray-800; // Changed to default Tailwind color class
+
+    &:hover {
+        @apply text-red-600;
     }
+}
 
-    .manga-title {
-        @apply bg-slate-200 p-2;
-        color: var(--primary-color);
-
-        &:hover {
-            @apply text-red-600;
-        }
-    }
-
-    .chapter-info {
-        @apply bg-gray-400 w-full flex justify-center text-xs;
-    }
+.chapter-info {
+    @apply bg-gray-400 w-full flex justify-center text-xs;
 
     .left {
         @apply bg-green-100 w-1/2 p-1 pl-3 text-left;
@@ -40,4 +32,25 @@
     .right {
         @apply bg-green-100 w-1/2 p-1 pr-3 text-right text-gray-600/65 italic text-xs;
     }
+}
+
+.test {
+    @apply bg-blue-500;
+    position: absolute;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    width: 220%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.adjust-left {
+    left: auto;
+    right: 0;
 }

@@ -1,6 +1,5 @@
-// src/components/ItemBook.tsx
-import React from 'react';
-import './ItemBook.scss'; // Import the SCSS file
+import React, { useState, useEffect, useRef } from 'react';
+import './ItemBook.scss';
 
 interface Chapter {
     number: number;
@@ -29,6 +28,21 @@ interface ItemBookProps {
 }
 
 const ItemBook: React.FC<ItemBookProps> = ({ item }) => {
+    const [isAdjusted, setIsAdjusted] = useState(false);
+    const testRef = useRef<HTMLDivElement>(null);
+    const [isHidden, setIsHidden] = useState(false);
+
+    useEffect(() => {
+        if (testRef.current) {
+            const rect = testRef.current.getBoundingClientRect();
+            if (rect.right > window.innerWidth) {
+                setIsAdjusted(true);
+            } else {
+                setIsAdjusted(false);
+            }
+        }
+    }, [isHidden]);
+
     const chapters: Chapter[] = [
         { number: 1, time: '1 ngày trước' },
         { number: 2, time: '2 ngày trước' },
@@ -36,33 +50,47 @@ const ItemBook: React.FC<ItemBookProps> = ({ item }) => {
         { number: 4, time: '4 ngày trước' } // Example chapter beyond limit
     ];
 
-    // Slice the chapters array to get the first 3 chapters
     const displayedChapters = chapters.slice(0, 3);
+
+    const handleMouseEnter = () => {
+        setIsHidden(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHidden(false);
+    };
 
     return (
         <div className="list__box">
-            <div className="image__box">
-                <img src={item.coverImage} alt={item.name} className='image' />
-                <div className='viewed'>
-                    {/* Replace with actual content */}
-                    day la thu nghiem
+            {isHidden && (
+                <div
+                    className={`test ${isAdjusted ? 'adjust-right' : ''}`}
+                    ref={testRef}
+                >
+                    test
                 </div>
+            )}
+            <div
+                className="image__box"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                <img src={item.coverImage} alt={item.name} className="image" />
+                <div className="viewed">day la thu nghiem</div>
             </div>
-            <div className='manga-title'>
+            <div className="manga-title">
                 <p>{item.name}</p>
             </div>
-            {
-                displayedChapters.map((chapter, index) => (
-                    <div className="chapter-info" key={index}>
-                        <div className="left">
-                            <p>Chapter {chapter.number}</p>
-                        </div>
-                        <div className="right">
-                            <p>{chapter.time}</p>
-                        </div>
+            {displayedChapters.map((chapter, index) => (
+                <div className="chapter-info" key={index}>
+                    <div className="left">
+                        <p>Chapter {chapter.number}</p>
                     </div>
-                ))
-            }
+                    <div className="right">
+                        <p>{chapter.time}</p>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };

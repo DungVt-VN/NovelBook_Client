@@ -1,6 +1,5 @@
-// src/components/ItemBookDetail/ItemBookDetail.scss
 .item-book-detail {
-    position: fixed; // Sử dụng vị trí cố định để pop-up điều chỉnh theo con chuột
+    position: fixed; // Use fixed position for the pop-up to adjust according to the mouse
     z-index: 1000;
     background-color: white;
     border: 1px solid #ccc;
@@ -9,7 +8,7 @@
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s;
-    max-width: 300px; // Điều chỉnh chiều rộng tối đa của pop-up
+    max-width: 300px; // Adjust the maximum width of the pop-up
 
     &.visible {
         visibility: visible;

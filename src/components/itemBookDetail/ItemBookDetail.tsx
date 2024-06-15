@@ -6,13 +6,14 @@ interface ItemBookDetailProps {
     item: BookDetail;
     position: { top: number, left: number };
     visible: boolean;
+    height: number;
 }
 
-const ItemBookDetail: React.FC<ItemBookDetailProps> = ({ item, position, visible }) => {
+const ItemBookDetail: React.FC<ItemBookDetailProps> = ({ item, position, visible, height }) => {
     return (
         <div
             className={`item-book-detail ${visible ? 'visible' : 'invisible'} absolute bg-white border shadow-lg p-4`}
-            style={{ top: position.top, left: position.left }}
+            style={{ top: position.top, left: position.left, height: height }}
         >
             <div className="detail-header flex items-center">
                 <img src={item.coverImage} alt={item.name} className="detail-image w-24 h-32 object-cover mr-4" />
