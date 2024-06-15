@@ -53,3 +53,17 @@
     @apply ml-2 p-2 rounded-md bg-gray-200 hover:bg-gray-300;
   }
 }
+
+// src/components/Navbar.scss
+
+
+
+.landing-container {
+  margin-top: 61.5px;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  z-index: -1;
+}
+

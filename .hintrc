@@ -9,7 +9,8 @@
       "default",
       {
         "ignore": [
-          "font-synthesis"
+          "font-synthesis",
+          "user-select"
         ]
       }
     ],
