@@ -1,13 +1,31 @@
 .header {
-    @apply relative h-80 bg-cover bg-center flex items-center justify-center;
-    background-image: url('https://your-image-url.com/header-bg.jpg');
-  
-    .overlay {
-      @apply absolute inset-0 bg-black;
-    }
-  
-    .headerContent {
-      @apply relative text-center;
-    }
-  }
-  
+  @apply relative bg-gray-800 text-white p-4;
+}
+
+.overlay {
+  @apply absolute inset-0 bg-black bg-opacity-50;
+}
+
+.headerContent {
+  @apply relative flex justify-center items-center max-w-7xl mx-auto;
+}
+
+.nav {
+  @apply flex space-x-4;
+}
+
+.nav-item {
+  @apply hover:underline;
+}
+
+.dropdown {
+  @apply relative;
+}
+
+.dropdown-content {
+  @apply absolute hidden bg-white text-black mt-2 shadow-lg;
+}
+
+.dropdown:hover .dropdown-content {
+  @apply block;
+}

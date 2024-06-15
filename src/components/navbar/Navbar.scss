@@ -1,24 +1,55 @@
-/* src/components/Navbar.scss */
+// src/components/Navbar.scss
 
 .navbar {
-  @apply flex justify-between items-center p-4 text-white;
+  @apply flex justify-between items-center p-2.5 text-white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   .container {
     @apply flex justify-between items-center w-full;
+    max-width: 1200px; /* Điều chỉnh độ rộng tối đa */
+    margin: 0 auto; /* Căn giữa navbar */
+    padding: 0 20px; /* Khoảng cách lề bên trong */
   }
 
   .logo {
-    @apply text-2xl font-bold;
+    @apply font-bold; /* Độ đậm cho font chữ */
   }
 
-  ul {
-    @apply flex space-x-6;
+  .nav-links ul {
+    @apply flex space-x-4; /* Khoảng cách giữa các liên kết */
+  }
 
-    li {
-      a {
-        @apply text-lg hover:underline;
-      }
-    }
+  .search-box {
+    @apply relative flex items-center;
+  }
+
+  .search-input {
+    @apply rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring focus:border-blue-300;
+    width: 200px; /* Độ rộng ô tìm kiếm */
+  }
+
+  .search-button {
+    @apply absolute right-0 top-0 bottom-0 flex items-center justify-center bg-transparent border-0;
+  }
+
+  .notification-icon,
+  .theme-icon {
+    @apply ml-4 cursor-pointer;
+  }
+
+  .auth-links {
+    @apply flex space-x-4;
+  }
+
+  .normal-link {
+    @apply text-lg hover:underline;
+  }
+
+  .auth-link {
+    @apply text-lg hover:underline border border-gray-300 px-3 py-1 rounded-md;
+  }
+
+  .search-button {
+    @apply ml-2 p-2 rounded-md bg-gray-200 hover:bg-gray-300;
   }
 }

@@ -1,0 +1,42 @@
+// src/components/ItemBookDetail/ItemBookDetail.scss
+.item-book-detail {
+    position: fixed; // Sử dụng vị trí cố định để pop-up điều chỉnh theo con chuột
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    max-width: 300px; // Điều chỉnh chiều rộng tối đa của pop-up
+
+    &.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .detail-header {
+        display: flex;
+        align-items: center;
+
+        .detail-image {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .detail-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    }
+
+    .detail-content {
+        margin-top: 10px;
+
+        p {
+            margin: 5px 0;
+        }
+    }
+}
