@@ -2,9 +2,6 @@
   @apply relative bg-gray-800 text-white p-4;
 }
 
-.overlay {
-  @apply absolute inset-0 bg-black bg-opacity-50;
-}
 
 .headerContent {
   @apply relative flex justify-center items-center max-w-7xl mx-auto;

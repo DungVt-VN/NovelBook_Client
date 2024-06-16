@@ -1,43 +1,46 @@
 // src/components/Navbar.tsx
 
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './Navbar.scss'; // Import CSS/SCSS file
 import Login from '../login/Login';
 import Register from '../register/Register';
+import ForgotPassword from '../forgotPW/FogotPW';
+// import Register from '../register/Register';
 
 const Navbar: React.FC = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-  const handleClick = () => {
-    setShowLogin(!showLogin);
+  const handleShowLogin = () => {
+    setShowLogin(true);
     setShowRegister(false);
-  }
+    setShowForgotPassword(false);
+  };
 
-  const handleClick2 = () => {
-    setShowRegister(!showRegister);
+  const handleShowRegister = () => {
     setShowLogin(false);
+    setShowRegister(true);
+    setShowForgotPassword(false);
+  };
+
+  const handleShowForgotPassword = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+    setShowForgotPassword(true);
+  };
+
+  const handleClose = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+    setShowForgotPassword(false);
   }
 
-  // const handleClick3 = () => {
-  //   setShowLogin(false);
-  //   setShowRegister(false);
-  // }
-
-  const callbackHandlerFunction = (clickStatus: boolean | ((prevState: boolean) => boolean)) => {
-    setShowLogin(clickStatus);
-    setShowRegister(clickStatus);
-  }
-
-  const callbackHandlerFunction2 = () => {
-    setShowLogin(!showLogin);
-    setShowRegister(!showRegister);
-  }
 
 
   return (
-    <>
+    <Fragment>
       <nav className='navbar bg-gradient-to-r from-purple-500 to-pink-500'>
 
         <div className='container flex justify-between items-center'>
@@ -83,19 +86,44 @@ const Navbar: React.FC = () => {
 
           {/* Auth Links */}
           <div className='auth-links space-x-4'>
-          <div className="register link" onClick={ handleClick2 }>Đăng ký</div>
-          <div className="login link" onClick={ handleClick }>Đăng Nhập</div>
+            <div className="auth-link" onClick={handleShowLogin}>Đăng Nhập</div>
+            <div className="auth-link" onClick={handleShowRegister}>Đăng Ký</div>
           </div>
         </div>
       </nav>
 
-      <div className='landing-container'>
-        <Outlet />
-        {showLogin ? <Login handleClickChild={callbackHandlerFunction} handleClickChild2={callbackHandlerFunction2} /> : null}
-        {showRegister ? <Register handleClickChild={callbackHandlerFunction} handleClickChild2={callbackHandlerFunction2} /> : null}
-      </div>
-    </>
+      <Outlet />
+
+
+      {
+        showLogin && (
+          <div className='overlay flex justify-center items-center'>
+            <div className='overlay-content'>
+              <Login onForgotPassword={handleShowForgotPassword} onSignup={handleShowRegister} onClose={handleClose} />
+            </div>
+          </div>
+        )
+      }
+      {
+        showRegister && (
+          <div className='overlay flex justify-center items-center'>
+            <div className='overlay-content'>
+              <Register onLogin={handleShowLogin} onClose={handleClose} />
+            </div>
+          </div>
+        )
+      }
+      {
+        showForgotPassword && (
+          <div className='overlay flex justify-center items-center'>
+            <div className='overlay-content'>
+              {showForgotPassword && <ForgotPassword onClose={handleClose} />}
+            </div>
+          </div>
+        )
+      }
+
+    </Fragment>
   );
 };
-
 export default Navbar;

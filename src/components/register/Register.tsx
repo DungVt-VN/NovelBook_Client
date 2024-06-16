@@ -1,160 +1,70 @@
-import { Fragment, useRef, useState, useEffect } from "react";
-import axios from "axios";
+import React from 'react';
+import './Register.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const USER_REGEX = /^[A-z][A-z0-9-_]+$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+interface RegisterProps {
+  onLogin: () => void;
+  onClose: () => void;
+}
 
-const Register = ({ handleClickChild, handleClickChild2 }) => {
-    const userRef = useRef();
-    const errRef = useRef();
+const Login: React.FC<RegisterProps> = ( {onClose, onLogin}) => {
 
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
+  const handleGoogleLogin = () => {
+    // Handle Google login logic here
+    console.log("Google login");
+  };
 
-    const [email, setEmail] = useState('');
-    const [validEmail, setValidEmail] = useState(false);
+  const handleFacebookLogin = () => {
+    // Handle Facebook login logic here
+    console.log("Facebook login");
+  };
 
-    const [pwd, setPwd] = useState('');
-    const [validPwd, setValidPwd] = useState(false);
+  const handleTwitterLogin = () => {
+    // Handle Twitter login logic here
+    console.log("Twitter login");
+  };
 
-    const [matchPwd, setMatchPwd] = useState('');
-    const [validMatch, setValidMatch] = useState(false);
-
-    const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
-
-    useEffect(() => {
-        setValidName(USER_REGEX.test(user));
-    }, [user]);
-
-    useEffect(() => {
-        setValidPwd(PWD_REGEX.test(pwd));
-        setValidMatch(pwd === matchPwd);
-    }, [pwd, matchPwd]);
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd, matchPwd, email]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        const isValidUser = USER_REGEX.test(user);
-        const isValidPwd = PWD_REGEX.test(pwd);
-
-        if (!isValidUser || !isValidPwd || pwd !== matchPwd) {
-            setErrMsg('Invalid input');
-            return;
-        }
-
-        try {
-            const response = await axios.post(REGISTER_URL, { user, pwd }, {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true
-            });
-            
-            console.log(response.data);
-            setSuccess(true);
-            setUser('');
-            setEmail('');
-            setPwd('');
-            setMatchPwd('');
-        } catch (err) {
-            if (!err.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed');
-            }
-            errRef.current.focus();
-        }
-    };
-
-    return (
-        <Fragment>
-            <div className="bg-form">
-                <div className="ps-form"></div>
-                <div className="login-form">
-                    <div className="test">
-                        <div className="main">
-                            <div className="switch is-txr" id="switch-cnt">
-                                <div className="switch__circle"></div>
-                                <div className="switch__circle switch__circle--t"></div>
-                                <div className="switch__circle"></div>
-                                <div className="switch__container" id="switch-c1">
-                                    <h2 className="switch__title title">Welcome Back !</h2>
-                                    <p className="switch__description description">To keep connected with us please login with your personal info</p>
-                                    <button className="switch__button button switch-btn" onClick={ handleClickChild2 }>SIGN IN</button>
-                                </div>
-                            </div>
-
-                            <div className="container a-container is-txl" id="a-container">
-                                <form className="form" id="a-form" onSubmit={ handleSubmit }>
-                                    <p ref={ errRef } className={ errMsg ? "errmsg" : "offscreen" } aria-live="assertive">{ errMsg }</p>
-                                    <h2 className="form_title title">Create Account</h2>
-                                    <div className="form__icons">
-                                        {/* Your icons */}
-                                    </div>
-                                    <div className="form__group">
-                                        <label htmlFor="username">Username</label>
-                                        <input
-                                            type="text"
-                                            id="username"
-                                            value={ user }
-                                            onChange={(e) => setUser(e.target.value)}
-                                            ref={ userRef }
-                                            required
-                                        />
-                                        {!validName && <p className="error-msg">Invalid username format</p>}
-                                    </div>
-                                    <div className="form__group">
-                                        <label htmlFor="email">Email</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            value={ email }
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            required
-                                        />
-                                        {!validEmail && <p className="error-msg">Invalid email format</p>}
-                                    </div>
-                                    <div className="form__group">
-                                        <label htmlFor="password">Password</label>
-                                        <input
-                                            type="password"
-                                            id="password"
-                                            value={ pwd }
-                                            onChange={(e) => setPwd(e.target.value)}
-                                            required
-                                        />
-                                        {!validPwd && <p className="error-msg">Password must be 8-24 characters, with at least one lowercase letter, one uppercase letter, one number, and one special character</p>}
-                                    </div>
-                                    <div className="form__group">
-                                        <label htmlFor="confirm-password">Confirm Password</label>
-                                        <input
-                                            type="password"
-                                            id="confirm-password"
-                                            value={ matchPwd }
-                                            onChange={(e) => setMatchPwd(e.target.value)}
-                                            required
-                                        />
-                                        {!validMatch && <p className="error-msg">Passwords do not match</p>}
-                                    </div>
-                                    <button type="submit" className="submit-btn">Register</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </Fragment>
-    );
+  return (
+    <div className='login-form'>
+      <button className='close-btn' onClick={onClose}>
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
+      <h2 className='text-2xl font-bold mb-6'>Register</h2>
+      <form>
+        <div className='form-group'>
+          <label>Email:</label>
+          <input type='email' required />
+        </div>
+        <div className='form-group mb-4'>
+          <label>Password:</label>
+          <input type='password' required />
+        </div>
+        <div className='form-group mb-4'>
+          <label>Confirm Password:</label>
+          <input type='password' required />
+        </div>
+        <button type='submit' className='login-btn'>Login</button>
+      </form>
+      <div className='additional-options'>
+        <span className='signup-prompt'>
+          Bạn đã có tài khoản? <button className='signup-link' onClick={onLogin}>Đăng Nhập</button>
+        </span>
+      </div>
+      <div className='social-login'>
+        <button className='social-btn google' onClick={handleGoogleLogin}>
+          <FontAwesomeIcon icon={faGoogle} size="lg" />
+        </button>
+        <button className='social-btn facebook' onClick={handleFacebookLogin}>
+          <FontAwesomeIcon icon={faFacebook} size="lg" />
+        </button>
+        <button className='social-btn twitter' onClick={handleTwitterLogin}>
+          <FontAwesomeIcon icon={faTwitter} size="lg" />
+        </button>
+      </div>
+    </div>
+  );
 };
 
-export default Register;
+export default Login;

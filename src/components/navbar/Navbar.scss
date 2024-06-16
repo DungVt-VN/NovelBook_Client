@@ -1,7 +1,6 @@
-// src/components/Navbar.scss
-
 .navbar {
   @apply flex justify-between items-center p-2.5 text-white;
+  z-index: 1000; /* Đảm bảo navbar hiển thị trên cùng */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   .container {
@@ -54,16 +53,27 @@
   }
 }
 
-// src/components/Navbar.scss
-
-
-
-.landing-container {
-  margin-top: 61.5px;
-  position: absolute;
-  display: flex;
+.overlay {
+  position: fixed;
+  top: 59px; /* Điều chỉnh theo chiều cao của Navbar */
+  left: 0;
   width: 100%;
-  background-color: white;
-  z-index: -1;
+  height: calc(100vh - 60px); /* Tính chiều cao còn lại của viewport */
+  background-color: rgba(255, 255, 255, 0.2); /* Màu trắng mờ với độ trong suốt */
+  -webkit-backdrop-filter: blur(10px); /* Áp dụng hiệu ứng blur */
+  backdrop-filter: blur(10px); /* Hỗ trợ cho trình duyệt webkit */
+  z-index: 2; /* Đảm bảo lớp này hiển thị trên các nội dung khác */
+  display: flex;
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  border: 1px solid rgba(0, 0, 0, 0.5); /* Tạo viền mờ */
 }
 
+.overlay-content {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

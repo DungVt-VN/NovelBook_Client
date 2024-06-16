@@ -10,7 +10,8 @@
       {
         "ignore": [
           "font-synthesis",
-          "user-select"
+          "user-select",
+          "backdrop-filter"
         ]
       }
     ],

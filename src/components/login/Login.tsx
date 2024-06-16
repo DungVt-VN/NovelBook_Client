@@ -1,126 +1,68 @@
-import { Fragment, useRef, useState, useEffect } from "react";
-// import axios from "axios";
-import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
-
+import React from 'react';
 import './Login.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-// interface LoginComponent {
-//     handleClickChild: Function;
-//     handleClickChild: Function;
-// }
+interface LoginProps {
+  onForgotPassword: () => void;
+  onSignup: () => void;
+  onClose: () => void;
+}
 
-const Login = (props) => {
-    const { handleClickChild, handleClickChild2 } = props;
-    const { setAuth } = useAuth();
+const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) => {
 
-    const userRef = useRef(null);
-    const errRef = useRef(null);
+  const handleGoogleLogin = () => {
+    // Handle Google login logic here
+    console.log("Google login");
+  };
 
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+  const handleFacebookLogin = () => {
+    // Handle Facebook login logic here
+    console.log("Facebook login");
+  };
 
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
+  const handleTwitterLogin = () => {
+    // Handle Twitter login logic here
+    console.log("Twitter login");
+  };
 
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd]);
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     try {
-    //         const response = await axios.post(
-    //             LOGIN_URL,
-    //             { user, pwd },
-    //             {
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 withCredentials: true
-    //             }
-    //         );
-
-    //         const accessToken = response?.data?.accessToken;
-    //         const roles = response?.data?.roles;
-    //         setAuth({ user, pwd, roles, accessToken });
-    //         setUser('');
-    //         setPwd('');
-    //         setSuccess(true);
-    //     } catch (err) {
-    //         if (!err?.response) {
-    //             setErrMsg('No Server Response');
-    //         } else if (err.response?.status === 400) {
-    //             setErrMsg('Missing Username or Password');
-    //         } else if (err.response?.status === 401) {
-    //             setErrMsg('Unauthorized');
-    //         } else {
-    //             setErrMsg('Login Failed');
-    //         }
-    //         errRef.current.focus();
-    //     }
-    // };
-
-    return (
-        <Fragment>
-            {success ? (
-                <section>
-                    <h1>You are logged in!</h1>
-                    <br />
-                    <p>
-                        <Link to="/">Go to Home</Link>
-                    </p>
-                </section>
-            ) : (
-                <div className="bg-form">
-                    <div className="ps-form"></div>
-                    <div className="login-form">
-                        <div className="test">
-                            <div className="main">
-                                <div className="container b-container" id="b-container">
-                                    <form className="form" id="b-form">
-                                        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive" style={{ color: "red" }}>{errMsg}</p>
-                                        <h2 className="form_title title">Sign in to Website</h2>
-                                        <div className="form__icons">
-                                            {/* Assuming these are your icons */}
-                                            <img className="form__icon" src="your-icon-path" alt="" />
-                                            <img className="form__icon" src="your-icon-path" alt="" />
-                                            <img className="form__icon" src="your-icon-path" alt="" />
-                                        </div>
-                                        <span className="form__span">or use your email account</span>
-                                        <input
-                                            className="form__input"
-                                            type="text"
-                                            placeholder="Email"
-                                            id="username"
-                                            ref={userRef}
-                                            autoComplete="off"
-                                            onChange={(e) => setUser(e.target.value)}
-                                            value={user}
-                                            required
-                                        />
-                                        <input
-                                            className="form__input"
-                                            type="password"
-                                            placeholder="Password"
-                                            id="password"
-                                            onChange={(e) => setPwd(e.target.value)}
-                                            value={pwd}
-                                            required
-                                        />
-                                        <a className="form__link">Forgot your password?</a>
-                                        <button className="form__button button submit" type="submit">SIGN IN</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </Fragment>
-    );
+  return (
+    <div className='login-form'>
+      <button className='close-btn' onClick={onClose}>
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
+      <h2 className='text-2xl font-bold mb-6'>Login</h2>
+      <form>
+        <div className='form-group'>
+          <label>Email:</label>
+          <input type='email' required />
+        </div>
+        <div className='form-group mb-4'>
+          <label>Password:</label>
+          <input type='password' required />
+        </div>
+        <button type='submit' className='login-btn'>Login</button>
+      </form>
+      <div className='additional-options'>
+        <button className='forgot-password' onClick={onForgotPassword}>Quên mật khẩu?</button>
+        <span className='signup-prompt'>
+          Bạn chưa có tài khoản? <button className='signup-link' onClick={onSignup}>Đăng ký</button>
+        </span>
+      </div>
+      <div className='social-login'>
+        <button className='social-btn google' onClick={handleGoogleLogin}>
+          <FontAwesomeIcon icon={faGoogle} size="lg" />
+        </button>
+        <button className='social-btn facebook' onClick={handleFacebookLogin}>
+          <FontAwesomeIcon icon={faFacebook} size="lg" />
+        </button>
+        <button className='social-btn twitter' onClick={handleTwitterLogin}>
+          <FontAwesomeIcon icon={faTwitter} size="lg" />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

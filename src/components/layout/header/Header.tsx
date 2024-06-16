@@ -4,7 +4,6 @@ import './Header.scss'; // Import Tailwind and custom styles
 const Header: React.FC = () => {
   return (
     <header className="header">
-      <div className="overlay"></div>
       <div className="headerContent">
         <nav className="nav">
           <a href="#" className="nav-item">Home</a>
