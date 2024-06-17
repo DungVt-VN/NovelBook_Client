@@ -7,7 +7,6 @@ import axios from '../../services/api/apiClient';
 import { useNavigate } from 'react-router-dom';
 import UseAuth from '../../context/UseAuth';
 
-
 const LOGIN_URL = '/api/account/login';
 
 interface LoginProps {
@@ -23,13 +22,8 @@ interface ErrorResponse {
 }
 
 const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) => {
-  // Kiểm tra xem đã đăng nhập hay chưa
-
-  // ----------------------------------------------------------------
   const { setAuth } = UseAuth();
-
   const navigate = useNavigate();
-
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
 
@@ -53,15 +47,14 @@ const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) =>
     try {
       const response = await axios.post(
         LOGIN_URL,
-        { email: user, password: pwd }, // Gửi dữ liệu đăng nhập dưới dạng object JSON
+        { email: user, password: pwd },
         {
           headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
+          withCredentials: true,
         }
       );
-      console.log(response?.data)
+
       const accessToken = response?.data?.token;
-      console.log(accessToken);
       const roles = response?.data?.role;
       setAuth(user, pwd, roles, accessToken);
       setUser('');
@@ -74,7 +67,7 @@ const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) =>
       } else if (error.response.status === 400) {
         setErrMsg('Yêu cầu không hợp lệ');
       } else if (error.response.status === 401) {
-        setErrMsg('Không được phép');
+        setErrMsg('Password Or Email Not Valid');
       } else {
         setErrMsg('Đăng nhập thất bại');
       }
@@ -85,18 +78,15 @@ const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) =>
   };
 
   const handleGoogleLogin = () => {
-    // Handle Google login logic here
-    console.log("Google login");
+    window.location.href = 'http://localhost:5167/api/account/login/google';
   };
 
   const handleFacebookLogin = () => {
-    // Handle Facebook login logic here
-    console.log("Facebook login");
+    window.location.href = 'http://localhost:5167/api/account/login/facebook';
   };
 
   const handleTwitterLogin = () => {
-    // Handle Twitter login logic here
-    console.log("Twitter login");
+    window.location.href = 'http://localhost:5167/api/account/login/twitter';
   };
 
   return (
@@ -105,7 +95,7 @@ const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) =>
         <FontAwesomeIcon icon={faTimes} />
       </button>
       <h2 className='text-2xl font-bold mb-6'>Login</h2>
-      {errMsg && <p ref={errRef} className='message'>{errMsg}</p>}
+      {errMsg && <p ref={errRef} className='text-red-700 text-xs'>{errMsg}</p>}
       <form onSubmit={handleSubmit}>
         <div className='form-group'>
           <label>Email:</label>

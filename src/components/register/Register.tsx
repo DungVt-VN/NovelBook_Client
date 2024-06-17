@@ -15,12 +15,6 @@ interface RegisterProps {
 }
 
 
-interface ErrorResponse {
-  response?: {
-    status?: number;
-  };
-}
-
 const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
 
   const { setAuth } = UseAuth();
@@ -66,15 +60,15 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
   }, [formErrors, isMatch]);
 
   const handleGoogleLogin = () => {
-    console.log("Google login");
+    window.location.href = 'http://localhost:5167/api/account/login/google';
   };
 
   const handleFacebookLogin = () => {
-    console.log("Facebook login");
+    window.location.href = 'http://localhost:5167/api/account/login/facebook';
   };
 
   const handleTwitterLogin = () => {
-    console.log("Twitter login");
+    window.location.href = 'http://localhost:5167/api/account/login/twitter';
   };
   useEffect(() => {
     setErrMsg('');
@@ -88,7 +82,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
       firstName: !firstName,
       lastName: !lastName,
       email: !email,
-      password: !password,  
+      password: !password,
       confirmPassword: password !== confirmPassword,
       gender: !gender,
     };
@@ -117,37 +111,60 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
           email: email,
           password: password,
           gender: gender,
-        }, // Gửi dữ liệu đăng nhập dưới dạng object JSON
+        },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true
         }
       );
-      console.log(response?.data)
+    
+      // Handle successful registration
+      console.log(response?.data);
       const accessToken = response?.data?.token;
-      console.log(accessToken);
       const roles = response?.data?.role;
       setAuth(username, password, roles, accessToken);
       setUsername('');
       setPassword('');
-      navigate(0);
-    } catch (err: unknown) {
-      const error = err as ErrorResponse;
-      if (!error.response) {
-        setErrMsg('Không có phản hồi từ máy chủ');
-      } else if (error.response.status === 400) {
-        setErrMsg('Yêu cầu không hợp lệ');
-      } else if (error.response.status === 401) {
-        setErrMsg('Không được phép');
-      } else if (error.response.status === 404) {
-        setErrMsg('Không tìm thấy tài nguyên');
+      navigate(0); // Redirect to the appropriate page after successful registration
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // Handle HTTP response errors
+        if (err.response) {
+          const message = err.response.data[0]?.code;
+          switch (err.response.status) {
+            case 400:
+              setErrMsg('Yêu cầu không hợp lệ');
+              break;
+            case 401:
+              setErrMsg('Không được phép');
+              break;
+            case 404:
+              setErrMsg('Không tìm thấy tài nguyên');
+              break;
+            default:
+              // Handle specific error codes or messages
+              if (message === 'DuplicateUserName') {
+                setErrMsg('Username đã tồn tại');
+              } else {
+                setErrMsg('Email đã tồn tại');
+              } 
+              break;
+          }
+        } else {
+          setErrMsg('Không có phản hồi từ máy chủ');
+        }
       } else {
-        setErrMsg('Đăng ký thất bại');
+        // Handle non-Axios errors
+        console.error('Lỗi không xác định:', err);
+        setErrMsg('Đã xảy ra lỗi không xác định');
       }
+      
       if (errRef.current) {
         errRef.current.focus();
       }
     }
+    
+
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
