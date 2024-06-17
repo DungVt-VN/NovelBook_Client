@@ -1,9 +1,10 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useState, ReactNode, useEffect } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   login: () => void;
   logout: () => void;
+  setAuth: (user: string, pwd: string, roles: string, accessToken: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,20 +27,24 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setIsAuthenticated(false);
     localStorage.setItem('isAuthenticated', 'false');
+    localStorage.removeItem('user');
+    localStorage.removeItem('pwd');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('accessToken');
   };
 
-  const value = { isAuthenticated, login, logout };
+  const setAuth = (user: string, pwd: string, roles: string, accessToken: string) => {
+    setIsAuthenticated(true);
+    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('user', user);
+    localStorage.setItem('pwd', pwd);
+    localStorage.setItem('roles', roles);
+    localStorage.setItem('accessToken', accessToken);
+  };
+
+  const value = { isAuthenticated, login, logout, setAuth };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { AuthProvider, useAuth };
+export { AuthProvider, AuthContext };

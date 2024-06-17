@@ -1,25 +1,53 @@
 .register-form {
-  @apply bg-white p-8 rounded-lg shadow-md;
+  @apply bg-white p-6 rounded-lg shadow-md;
   max-width: 400px;
   margin: 0 auto;
   position: relative;
 
+  .form-row {
+    @apply flex justify-between mb-3;
+
+    .form-group {
+      @apply flex-1;
+
+      &:not(:last-child) {
+        @apply mr-2;
+      }
+    }
+  }
+
   .form-group {
-    @apply mb-4;
+    @apply mb-3;
+
+    &.invalid input,
+    &.invalid select {
+      @apply border-red-500;
+    }
 
     label {
-      @apply block text-gray-700 mb-2;
+      @apply block text-gray-700 mb-1 text-sm;
     }
 
-    input {
-      @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400;
+    input,
+    select {
+      @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm;
     }
   }
+
   .register-btn {
-    @apply w-full py-2 px-4 bg-gradient-to-r from-green-500 to-green-700 text-white font-bold rounded-md hover:from-green-600 hover:to-green-800 transition duration-300;
+    @apply w-full py-2 px-3 bg-gradient-to-r from-green-500 to-green-700 text-white font-bold rounded-md hover:from-green-600 hover:to-green-800 transition duration-300 disabled:bg-gray-300 disabled:pointer-events-none disabled:opacity-50;
+
+    &.disabled {
+      @apply bg-gray-300 text-gray-600 cursor-not-allowed;
+    }
+
+    &.enabled {
+      @apply hover:from-green-600 hover:to-green-800 hover:text-white;
+    }
   }
+
   .additional-options {
-    @apply mt-4 text-center;
+    @apply mt-3 text-center;
 
     .signup-prompt {
       @apply text-sm block mt-2;
@@ -31,12 +59,12 @@
   }
 
   .social-login {
-    @apply mt-6 flex justify-around;
+    @apply mt-4 flex justify-around;
 
     .social-btn {
-      @apply py-2 px-4 rounded-md text-white flex items-center justify-center;
-      width: 48px; /* Adjust button size */
-      height: 48px;
+      @apply py-2 px-3 rounded-md text-white flex items-center justify-center;
+      width: 40px; /* Adjust button size */
+      height: 40px;
 
       &.google {
         @apply bg-red-500 hover:bg-red-600;
@@ -51,16 +79,36 @@
       }
 
       svg {
-        @apply text-xl; /* Adjust icon size */
+        @apply text-lg; /* Adjust icon size */
       }
     }
   }
 
   .close-btn {
-    @apply absolute top-4 right-4 text-gray-700 hover:text-gray-900;
+    @apply absolute top-3 right-3 text-gray-700 hover:text-gray-900;
     background: none;
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
   }
+
+  .shake {
+    animation: shake 0.5s;
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+  }
 }
+

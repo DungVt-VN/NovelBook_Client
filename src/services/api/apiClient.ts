@@ -1,15 +1,20 @@
-// src/services/api/apiClient.ts
 import axios from 'axios';
 
-const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+const BASE_URL = 'http://localhost:5167'; // Correct server URL
+
+export default axios.create({
+  baseURL: BASE_URL
+});
+
+export const apiClient = axios.create({
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
-apiClient.interceptors.request.use(config => {
-  // Thêm logic để chèn token hoặc xử lý request trước khi gửi đi
+apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -18,11 +23,8 @@ apiClient.interceptors.request.use(config => {
 });
 
 apiClient.interceptors.response.use(
-  response => response,
-  error => {
-    // Thêm logic xử lý lỗi
+  (response) => response,
+  (error) => {
     return Promise.reject(error);
   }
 );
-
-export default apiClient;

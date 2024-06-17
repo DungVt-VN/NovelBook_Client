@@ -6,9 +6,12 @@ import './Navbar.scss'; // Import CSS/SCSS file
 import Login from '../login/Login';
 import Register from '../register/Register';
 import ForgotPassword from '../forgotPW/FogotPW';
-// import Register from '../register/Register';
+import UseAuth from '../../context/UseAuth';
+import Logout from '../logout/Logout';
 
 const Navbar: React.FC = () => {
+  const { isAuthenticated } = UseAuth();
+
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -36,7 +39,6 @@ const Navbar: React.FC = () => {
     setShowRegister(false);
     setShowForgotPassword(false);
   }
-
 
 
   return (
@@ -85,10 +87,19 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Auth Links */}
-          <div className='auth-links space-x-4'>
-            <div className="auth-link" onClick={handleShowLogin}>Đăng Nhập</div>
-            <div className="auth-link" onClick={handleShowRegister}>Đăng Ký</div>
-          </div>
+          {!isAuthenticated ? (
+            <div className='auth-links space-x-4'>
+              <div className="auth-link" onClick={handleShowLogin}>Đăng Nhập</div>
+              <div className="auth-link" onClick={handleShowRegister}>Đăng Ký</div>
+            </div>
+          ) : (
+            <div className='auth-link'>
+              <Logout />
+              
+            </div>
+          )
+          }
+
         </div>
       </nav>
 
