@@ -5,7 +5,7 @@ import { faGoogle, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-ic
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from '../../services/api/apiClient';
 import { useNavigate } from 'react-router-dom';
-import UseAuth from '../../context/UseAuth';
+import useAuth from '../../hooks/useAuth';
 
 const LOGIN_URL = '/api/account/login';
 
@@ -22,7 +22,7 @@ interface ErrorResponse {
 }
 
 const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) => {
-  const { setAuth } = UseAuth();
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
@@ -54,9 +54,8 @@ const Login: React.FC<LoginProps> = ({ onForgotPassword, onSignup, onClose }) =>
         }
       );
 
-      const accessToken = response?.data?.token;
-      const roles = response?.data?.role;
-      setAuth(user, pwd, roles, accessToken);
+      const token = response?.data?.token;
+      setAuth(user, token);
       setUser('');
       setPwd('');
       navigate(0);

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import UseAuth from '../../context/UseAuth';
+import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = 'http://localhost:5167/api/account/register';
@@ -17,7 +17,7 @@ interface RegisterProps {
 
 const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
 
-  const { setAuth } = UseAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
 

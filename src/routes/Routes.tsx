@@ -6,13 +6,28 @@ import Navbar from '../components/navbar/Navbar';
 import Header from '../components/layout/header/Header';
 import Footer from '../components/layout/footer/Footer';
 import NotFound from '../pages/notFound/NotFound';
+import useAuth from '../hooks/useAuth';
+import AdminNavbar from '../components/adminnavbar/AdminNavbar';
 
 const Routing = () => {
+  const { isAuthenticated, roles, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>; // Hoặc một component loading tùy chỉnh
+  }
+
+  const isAdmin = roles.includes('Admin');
+  const admin = isAuthenticated && isAdmin;
+
   return (
     <BrowserRouter>
-      <div>
-        <Navbar />
-        <Header />
+      <>
+        {admin ? <AdminNavbar /> : (
+          <>
+            <Navbar />
+            <Header />
+          </>
+        )}
         <div className="container mx-auto p-4">
           <Routes>
             {RouteConfig.map((route, index) => {
@@ -23,7 +38,7 @@ const Routing = () => {
                   <Route
                     key={index}
                     path={route.path}
-                    element={<PrivateRoute>{RouteElement}</PrivateRoute>}
+                    element={<PrivateRoute allowedRoles={route.allowedRoles}>{RouteElement}</PrivateRoute>}
                   />
                 );
               }
@@ -39,8 +54,8 @@ const Routing = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-        <Footer />
-      </div>
+        {!admin && <Footer />}
+      </>
     </BrowserRouter>
   );
 };

@@ -1,0 +1,56 @@
+/* AdminNavbar.css */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 60px;
+    background: #333;
+    color: #fff;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  
+  .sidebar:hover {
+    width: 200px;
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 60px 0 0 0;
+  }
+  
+  .sidebar-menu li {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar-menu li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .icon {
+    font-size: 24px;
+  }
+  
+  .sidebar-menu li span {
+    margin-left: 10px;
+    display: inline-block;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+  }
+  
+  .sidebar:hover .sidebar-menu li span {
+    opacity: 1;
+    width: auto;
+  }
+  

@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import UseAuth from '../../context/UseAuth';
+
 import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
 
 const LOGOUT_URL = 'http://localhost:5167/api/account/logout';
 
 
 const Logout: React.FC = () => {
-    const { logout } = UseAuth();
+    const { logout } = useAuth();
     const navigate = useNavigate();
     const token = localStorage.getItem('accessToken');
     const handleLogout = async () => {

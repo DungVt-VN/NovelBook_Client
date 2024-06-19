@@ -1,0 +1,50 @@
+.user-manager {
+    @apply p-4;
+  
+    h1 {
+      @apply mb-4;
+    }
+  
+    table {
+      @apply w-full border-collapse border border-gray-300;
+  
+      th, td {
+        @apply border border-gray-300 p-2;
+      }
+  
+      th {
+        @apply p-2 bg-gray-200;
+      }
+  
+      td {
+        button {
+          @apply mr-2 p-2 bg-blue-500 text-white rounded cursor-pointer;
+        }
+      }
+    }
+  }
+  
+  .edit-user-form {
+    @apply p-4 bg-gray-200 mt-4;
+  
+    h2 {
+      @apply mb-4;
+    }
+  
+    form {
+      @apply flex flex-col;
+  
+      label {
+        @apply mb-2;
+  
+        input[type="text"],
+        input[type="email"] {
+          @apply w-full p-2 mt-1 mb-2 border border-gray-300 rounded;
+        }
+      }
+  
+      button {
+        @apply mt-2 p-2 bg-green-500 text-white rounded cursor-pointer;
+      }
+    }
+  }

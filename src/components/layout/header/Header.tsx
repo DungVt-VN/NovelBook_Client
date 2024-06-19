@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.scss'; // Import Tailwind and custom styles
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const Header: React.FC = () => {
             </div>
           </div>
           <a href="#" className="nav-item">Lịch sử</a>
-          <a href="#" className="nav-item">Theo dõi</a>
+          <Link to={'/Followed'} className="nav-item">Theo dõi</Link>
           <div className="dropdown">
             <button className="nav-item">Xếp hạng</button>
             <div className="dropdown-content">

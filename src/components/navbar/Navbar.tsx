@@ -6,11 +6,11 @@ import './Navbar.scss'; // Import CSS/SCSS file
 import Login from '../login/Login';
 import Register from '../register/Register';
 import ForgotPassword from '../forgotPW/FogotPW';
-import UseAuth from '../../context/UseAuth';
+import useAuth from '../../hooks/useAuth';
 import Logout from '../logout/Logout';
 
 const Navbar: React.FC = () => {
-  const { isAuthenticated } = UseAuth();
+  const { isAuthenticated } = useAuth();
 
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
