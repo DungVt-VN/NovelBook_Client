@@ -1,8 +1,14 @@
 import React from 'react';
 import './Header.scss'; // Import Tailwind and custom styles
 import { Link } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 const Header: React.FC = () => {
+  const { roles } = useAuth();
+  // const rolesArray: string[] = ['Guest'].concat(roles || []); lỗi thì dùng cái này wtf
+  const isCreator = roles.some((role: string) => role.toLowerCase() === "creator");
+  
+
   return (
     <header className="header">
       <div className="headerContent">
@@ -25,10 +31,11 @@ const Header: React.FC = () => {
               <a href="#">Xếp hạng 2</a>
             </div>
           </div>
-          <a href="#" className="nav-item">Yêu cầu truyện</a>
+          { isCreator && <Link to={'/creator/mybooks'}>Truyện của tôi</Link>}
+          { isCreator && <Link to={'/creator/requests'}>Truyện được yêu cầu</Link>}
           <a href="#" className="nav-item">Thảo luận</a>
           <a href="#" className="nav-item">Fanpage</a>
-          <a href="#" className="nav-item">Group</a>
+          <a href="#" className="nav-item">Nhóm chat</a>
         </nav>
       </div>
     </header>

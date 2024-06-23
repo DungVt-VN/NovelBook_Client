@@ -1,0 +1,38 @@
+.home {
+    width: 100px;
+    height: 40px;
+    background-color: gray;
+    text-align: center;
+    color: brown;
+}
+
+.test {
+    font-size: 22px;
+    color: green;
+}
+
+.table-container {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+        text-align: left;
+        vertical-align: top;
+        padding-right: 10px;
+    }
+
+    td {
+        @apply pr-3;
+    }
+
+    .limited-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+    
+}

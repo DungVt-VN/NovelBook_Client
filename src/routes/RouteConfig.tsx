@@ -2,9 +2,11 @@ import React from 'react';
 import Home from '../pages/home/Home';
 import Followed from '../pages/followed/Followed';
 import NotFound from '../pages/notFound/NotFound';
-import BookDetail from '../pages/bookdetail/BookDetail';
 import NotLogged from '../pages/notlogged/NotLogged';
 import UserManagement from '../pages/usermanager/UserManager';
+import PageDetail from '../pages/pagedetail/PageDetail';
+import Reader from '../pages/reader/Reader';
+import MyBook from '../pages/mybook/MyBook';
 
 interface Route {
   path: string;
@@ -26,8 +28,18 @@ const RouteConfig: Route[] = [
     allowedRoles: ['User'],
   },
   {
+    path: '/book/:namebook/:id' ,
+    component: <PageDetail />,
+    isPrivate: false,
+  },
+  {
     path: '/book/:id',
-    component: <BookDetail />,
+    component: <PageDetail />,
+    isPrivate: false,
+  },
+  {
+    path: '/book/:namebook/:id/:chapter' ,
+    component: <Reader />,
     isPrivate: false,
   },
   {
@@ -36,15 +48,21 @@ const RouteConfig: Route[] = [
     isPrivate: false,
   },
   {
-    path: '*',
-    component: <NotFound />,
-    isPrivate: false,
-  },
-  {
     path: '/admin/users',
     component: <UserManagement />,
     isPrivate: true,
     allowedRoles: ['Admin'],
+  },
+  {
+    path: '/creator/mybooks',
+    component: <MyBook />,
+    isPrivate: true,
+    allowedRoles: ['Creator'],
+  },
+  {
+    path: '*',
+    component: <NotFound />,
+    isPrivate: false,
   },
 ];
 

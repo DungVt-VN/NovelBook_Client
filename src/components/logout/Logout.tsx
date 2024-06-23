@@ -8,9 +8,8 @@ const LOGOUT_URL = 'http://localhost:5167/api/account/logout';
 
 
 const Logout: React.FC = () => {
-    const { logout } = useAuth();
+    const { logout, token } = useAuth();
     const navigate = useNavigate();
-    const token = localStorage.getItem('accessToken');
     const handleLogout = async () => {
         try {
             const response = await axios.post(

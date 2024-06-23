@@ -28,7 +28,7 @@ const Routing = () => {
             <Header />
           </>
         )}
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 bg-slate-500/50">
           <Routes>
             {RouteConfig.map((route, index) => {
               const RouteElement = route.component;

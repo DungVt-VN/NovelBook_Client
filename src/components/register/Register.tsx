@@ -122,7 +122,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
       console.log(response?.data);
       const accessToken = response?.data?.token;
       const roles = response?.data?.role;
-      setAuth(username, password, roles, accessToken);
+      setAuth(roles, accessToken);
       setUsername('');
       setPassword('');
       navigate(0); // Redirect to the appropriate page after successful registration

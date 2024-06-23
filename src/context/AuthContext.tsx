@@ -8,10 +8,11 @@ interface AuthContextType {
   roles: string[];
   loading: boolean;
   token: string;
+  userId: string;
 }
 
 interface AuthToken {
-  email: string;
+  nameid: string;
   given_name: string;
   role?: string[];
   nbf: number;
@@ -28,16 +29,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [roles, setRoles] = useState<string[]>(['Guest']);
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
 
   useEffect(() => {
     // Khôi phục trạng thái từ localStorage khi tải lại trang
     const storedAuth = localStorage.getItem('isAuthenticated');
     const storedRoles = localStorage.getItem('roles');
-    console.log(storedRoles);
+    const storedToken = localStorage.getItem('accessToken');
+    const storedUserId = localStorage.getItem('nameid');
     if (storedAuth && storedRoles) {
       const parsedRoles = JSON.parse(storedRoles);
       setIsAuthenticated(storedAuth === 'true');
       setRoles(parsedRoles);
+      setToken(storedToken || '');
+      setUserId(storedUserId || '');
     }
     setLoading(false); // Đánh dấu rằng việc khôi phục đã hoàn tất
   }, []);
@@ -46,6 +51,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
     setRoles(['Guest']);
     setToken('');
+    localStorage.removeItem('nameid')
     localStorage.setItem('isAuthenticated', 'false');
     localStorage.removeItem('user');
     localStorage.removeItem('roles');
@@ -58,13 +64,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const role = decodedToken.role ?? ['Guest'];
     setRoles(role);
     setToken(token);
+    setUserId(decodedToken.nameid);
     localStorage.setItem('isAuthenticated', 'true');
     localStorage.setItem('user', user);
     localStorage.setItem('roles', JSON.stringify(role));
     localStorage.setItem('accessToken', token);
+    localStorage.setItem('nameid', decodedToken.nameid);
   };
 
-  const value = { isAuthenticated, logout, setAuth, roles, loading, token };
+  const value = { isAuthenticated, logout, setAuth, roles, loading, token, userId };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

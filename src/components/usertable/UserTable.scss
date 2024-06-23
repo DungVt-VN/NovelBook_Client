@@ -1,0 +1,84 @@
+.user-table-container {
+    position: relative;
+  
+    .filter-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      input[type="text"],
+      select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-size: 14px;
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  
+        &:focus {
+          outline: none;
+          border-color: #4a90e2;
+          box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+      }
+  
+      select {
+        appearance: none;
+        background-color: white;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #f2f2f2;
+        }
+      }
+  
+      input[type="text"]::placeholder {
+        color: #999;
+      }
+  
+      button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease-in-out;
+  
+        &:hover {
+          background-color: #357ebd;
+        }
+      }
+    }
+  
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ccc;
+  
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 14px;
+      }
+  
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        text-align: center;
+      }
+  
+      tbody tr:hover {
+        background-color: #f9f9f9;
+      }
+  
+      td {
+        button {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  

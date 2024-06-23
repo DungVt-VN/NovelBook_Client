@@ -4,7 +4,7 @@ import User from '../models/User';
 
 export const getAllUsers = async (token: string): Promise<User[]> => {
   try {
-    const response = await apiClient.get(`admin/users`, {
+    const response = await apiClient.get(`admin/users1`, {
       headers: {
         Authorization: `Bearer ${token}`, // Assuming token is a JWT token
       },

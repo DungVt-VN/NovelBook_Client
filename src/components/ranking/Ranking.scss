@@ -1,0 +1,6 @@
+.ranking-container {
+    @apply bg-white rounded-lg shadow-md mt-6;
+    .table-header {
+        @apply flex-1 px-4 text-center text-gray-600;
+    }
+}

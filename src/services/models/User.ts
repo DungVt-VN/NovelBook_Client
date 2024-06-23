@@ -2,9 +2,9 @@ export default interface User {
     id: string;
     userName: string;
     email: string;
-    emailConfirmed: boolean;
+    emailConfirmed: number; 
     phoneNumber: string;
-    lockoutEnd: string | null;
+    lockoutEnd: number;
     roles: string[];
   }
   

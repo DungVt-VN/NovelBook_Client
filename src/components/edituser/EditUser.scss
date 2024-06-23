@@ -1,0 +1,25 @@
+.edit-container {
+    .edit-user-form {
+        @apply p-4 bg-gray-200 mt-4;
+        h2 {
+            @apply mb-4;
+        }
+
+        form {
+            @apply flex flex-col;
+
+            label {
+                @apply mb-2;
+
+                input[type="text"],
+                input[type="email"] {
+                    @apply w-full p-2 mt-1 mb-2 border border-gray-300 rounded;
+                }
+            }
+
+            button {
+                @apply mt-2 p-2 text-white rounded cursor-pointer;
+            }
+        }
+    }
+}
