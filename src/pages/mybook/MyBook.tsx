@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { SortBy } from '../../services/models/SortBy';
+import EditBook from '../../components/editbook/EditBook';
 
 const MyBook: React.FC = () => {
   const url = 'http://localhost:5167/api/book';
@@ -16,11 +17,18 @@ const MyBook: React.FC = () => {
 
   useEffect(() => {
     if (showAddForm) {
-      document.body.style.overflow = 'hidden'; // khong cho tương tác với các phần tử phía sau lớp phủ
+      document.body.style.overflow = 'hidden';
+      scrollToTop();
     } else {
       document.body.style.overflow = 'auto';
     }
   }, [showAddForm]);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(event.target.value, 10);
@@ -32,7 +40,8 @@ const MyBook: React.FC = () => {
     setSelectedSort(value as SortBy);
   };
 
-  const handleAddBookClick = () => {
+  const handleAddBookClick = (e: React.FormEvent) => {
+    e.preventDefault();
     setShowAddForm(true); // Khi click vào nút "Add Book", hiển thị form
   };
 
@@ -52,13 +61,7 @@ const MyBook: React.FC = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold mb-4">Edit Book Details</h2>
             {/* Form chỉnh sửa thông tin sách */}
-              <button
-                type="button"
-                onClick={() => setShowAddForm(false)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Close
-              </button>
+            <EditBook isNew={true} handleClose={() => setShowAddForm(false)} />
             {/* End Form Editing */}
           </div>
         </div>
