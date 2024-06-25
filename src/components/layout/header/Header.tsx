@@ -5,8 +5,10 @@ import useAuth from '../../../hooks/useAuth';
 
 const Header: React.FC = () => {
   const { roles } = useAuth();
-  // const rolesArray: string[] = ['Guest'].concat(roles || []); lỗi thì dùng cái này wtf
-  const isCreator = roles.some((role: string) => role.toLowerCase() === "creator");
+  // lỗi thì dùng cái này wtf
+  const rolesArray: string[] = ['Guest'].concat(roles || []);
+  const isCreator = rolesArray.some((role: string) => role.toLowerCase() === "creator"); 
+  // const isCreator = roles.some((role: string) => role.toLowerCase() === "creator");
   
 
   return (

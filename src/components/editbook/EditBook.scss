@@ -22,17 +22,18 @@
 
 .book-detail {
     @apply ml-5 block w-auto min-w-[50%];
-}
-
-.book-detail-table {
 
     th,
     td {
-        @apply text-left pl-2 align-text-top;
+        @apply text-left pl-2 align-text-top py-1;
     }
 
     th {
-        @apply w-40;
+        @apply w-[9rem];
+    }
+    
+    input, select, textarea {
+        @apply border-2 border-gray-300 rounded-[4px];
     }
 }
 
@@ -43,6 +44,15 @@
 
 
 
+.custom-select__control {
+    max-height: 38px;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.custom-select__multi-value {
+    white-space: nowrap;
+}
 
 
 
@@ -50,8 +60,8 @@
 .dropzone {
     @apply w-44 h-60 p-5 border-[#cccccc] border-dashed border-4 rounded-lg text-center cursor-pointer;
     transition: border 0.2s ease-in-out;
-  
+
     &:hover {
-      @apply border-[#00e676];
+        @apply border-[#00e676];
     }
 }

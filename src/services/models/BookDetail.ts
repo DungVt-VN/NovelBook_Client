@@ -10,6 +10,16 @@ export enum BookStatusEnum {
     Khongro = 6,
 }
 
+export interface Category {
+    categoryId: number;
+    categoryName: string;
+}
+
+export interface Tag {
+    tagId: number;
+    tagName: string;
+}
+
 export interface BookDetail {
     bookId: number;
     name: string;
@@ -17,6 +27,7 @@ export interface BookDetail {
     ownerId: string;
     coverImage: string;
     status: BookStatusEnum;
+    active: boolean;
     currentChapter: number;
     description: string;
     author: string;
@@ -36,6 +47,7 @@ export interface BookDetailAll {
     ownerId: string;
     coverImage: string;
     status: BookStatusEnum;
+    actived: boolean;
     currentChapter: number;
     description: string;
     author: string;

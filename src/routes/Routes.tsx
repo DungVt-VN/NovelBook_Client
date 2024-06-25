@@ -21,7 +21,7 @@ const Routing = () => {
 
   return (
     <BrowserRouter>
-      <>
+      <div id='set'>
         {admin ? <AdminNavbar /> : (
           <>
             <Navbar />
@@ -55,7 +55,7 @@ const Routing = () => {
           </Routes>
         </div>
         {!admin && <Footer />}
-      </>
+      </div>
     </BrowserRouter>
   );
 };

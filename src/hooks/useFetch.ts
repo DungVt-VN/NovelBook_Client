@@ -1,8 +1,9 @@
 // src/hooks/useFetch.ts
-import { useState, useEffect } from 'react';
-import axios, { AxiosResponse, CancelTokenSource } from 'axios';
+import { useState, useEffect } from "react";
+import axios, { AxiosResponse, CancelTokenSource } from "axios";
+import useAuth from "./useAuth";
 
-// Định nghĩa kiểu dữ liệu trả về từ API
+// Define the return type of the API
 interface UseFetchResult<T> {
   data: T | null;
   loading: boolean;
@@ -13,6 +14,7 @@ const useFetch = <T = unknown>(url: string): UseFetchResult<T> => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { token } = useAuth(); // Assuming useAuth returns { token: string }
 
   useEffect(() => {
     let isMounted = true;
@@ -23,15 +25,20 @@ const useFetch = <T = unknown>(url: string): UseFetchResult<T> => {
       try {
         const response: AxiosResponse<T> = await axios.get(url, {
           cancelToken: source.token,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Other headers if needed
+          },
         });
+
         if (isMounted) {
           setData(response.data);
         }
       } catch (err) {
         if (axios.isCancel(err)) {
-          console.log('Request canceled', err.message);
+          console.log("Request canceled", err.message);
         } else if (isMounted) {
-          setError('Failed to fetch data');
+          setError("Failed to fetch data");
         }
       } finally {
         if (isMounted) {
@@ -44,9 +51,9 @@ const useFetch = <T = unknown>(url: string): UseFetchResult<T> => {
 
     return () => {
       isMounted = false;
-      source.cancel('Operation canceled by the user.');
+      source.cancel("Operation canceled by the user.");
     };
-  }, [url]);
+  }, [url, token]); // Include token in dependency array to react to changes in token
 
   return { data, loading, error };
 };

@@ -117,7 +117,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
           withCredentials: true
         }
       );
-    
+
       // Handle successful registration
       console.log(response?.data);
       const accessToken = response?.data?.token;
@@ -147,7 +147,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
                 setErrMsg('Username đã tồn tại');
               } else {
                 setErrMsg('Email đã tồn tại');
-              } 
+              }
               break;
           }
         } else {
@@ -158,12 +158,12 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
         console.error('Lỗi không xác định:', err);
         setErrMsg('Đã xảy ra lỗi không xác định');
       }
-      
+
       if (errRef.current) {
         errRef.current.focus();
       }
     }
-    
+
 
   };
 
