@@ -1,0 +1,861 @@
+@mixin box-shadow($shadow) {
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+
+@mixin button-loading($loading) {
+    button {
+        color: white;
+        background-color: #1D4ED8;
+        --ring-color: #93C5FD;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        line-height: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+        text-align: center;
+        margin-right: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        border: none;
+    }
+
+    button:hover {
+        background-color: #1E40AF;
+    }
+
+    button:focus {
+        box-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    }
+
+    button svg {
+        display: inline;
+        width: 1.3rem;
+        height: 1.3rem;
+        margin-right: 0.75rem;
+        color: white;
+        animation: spin_357 1s linear infinite;
+    }
+
+    @keyframes spin_357 {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+@mixin button-coppied {
+    button {
+        background-color: #F2F7FA;
+        width: 100px;
+        height: 30px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        overflow: hidden;
+        transition-duration: 700ms;
+    }
+
+    button span:first-child {
+        color: #0E418F;
+        position: absolute;
+        transform: translate(-50%, -50%)
+    }
+
+    button span:last-child {
+        position: absolute;
+        color: #B5CCF3;
+        opacity: 0;
+        transform: translateY(100%) translateX(-50%);
+        height: 14px;
+        line-height: 13px;
+    }
+
+    button:focus {
+        background-color: #0E418F;
+        width: 120px;
+        height: 40px;
+        transition-delay: 100ms;
+        transition-duration: 500ms;
+    }
+
+    button:focus span:first-child {
+        color: #B5CCF3;
+        transform: translateX(-50%) translateY(-150%);
+        opacity: 0;
+        transition-duration: 500ms;
+    }
+
+    button:focus span:last-child {
+        transform: translateX(-50%) translateY(-50%);
+        opacity: 1;
+        transition-delay: 300ms;
+        transition-duration: 500ms;
+    }
+
+    button:focus:end {
+        background-color: #FFFFFF;
+        width: 120px;
+        height: 40px;
+        transition-duration: 900ms;
+    }
+
+    .centralize {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .description {
+        margin-top: 10px;
+        color: #B5CCF3;
+    }
+}
+
+@mixin botton-add-item {
+    .button {
+        position: relative;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border: 1px solid #34974d;
+        background-color: #3aa856;
+    }
+
+    .button,
+    .button__icon,
+    .button__text {
+        transition: all 0.3s;
+    }
+
+    .button .button__text {
+        transform: translateX(30px);
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .button .button__icon {
+        position: absolute;
+        transform: translateX(109px);
+        height: 100%;
+        width: 39px;
+        background-color: #34974d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .button .svg {
+        width: 30px;
+        stroke: #fff;
+    }
+
+    .button:hover {
+        background: #34974d;
+    }
+
+    .button:hover .button__text {
+        color: transparent;
+    }
+
+    .button:hover .button__icon {
+        width: 148px;
+        transform: translateX(0);
+    }
+
+    .button:active .button__icon {
+        background-color: #2e8644;
+    }
+
+    .button:active {
+        border: 1px solid #2e8644;
+    }
+}
+
+
+@mixin button-thanks-click {
+    .button {
+        height: 50px;
+        width: 150px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .button:hover {
+        box-shadow: .5px .5px 150px #252525;
+    }
+
+    .type1::after {
+        content: "Thanks";
+        height: 50px;
+        width: 150px;
+        background-color: #008080;
+        color: #fff;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        transform: translateY(50px);
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .type1::before {
+        content: "Hover Me";
+        height: 50px;
+        width: 150px;
+        background-color: #fff;
+        color: #008080;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        transform: translateY(0px) scale(1.2);
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .type1:hover::after {
+        transform: translateY(0) scale(1.2);
+    }
+
+    .type1:hover::before {
+        transform: translateY(-50px) scale(0) rotate(120deg);
+    }
+}
+
+@mixin button-pickup {
+    button {
+        width: 9em;
+        height: 3em;
+        border-radius: 30em;
+        font-size: 15px;
+        font-family: inherit;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 6px 6px 12px #c5c5c5,
+            -6px -6px 12px #ffffff;
+    }
+
+    button::before {
+        content: '';
+        width: 0;
+        height: 3em;
+        border-radius: 30em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+        transition: .5s ease;
+        display: block;
+        z-index: -1;
+    }
+
+    button:hover::before {
+        width: 9em;
+    }
+}
+
+@mixin button-bell {
+    .button {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(44, 44, 44);
+        border-radius: 50%;
+        cursor: pointer;
+        transition-duration: .3s;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.13);
+        border: none;
+    }
+
+    .bell {
+        width: 18px;
+    }
+
+    .bell path {
+        fill: white;
+    }
+
+    .button:hover {
+        background-color: rgb(56, 56, 56);
+    }
+
+    .button:hover .bell {
+        animation: bellRing 0.9s both;
+    }
+
+    /* bell ringing animation keyframes*/
+    @keyframes bellRing {
+
+        0%,
+        100% {
+            transform-origin: top;
+        }
+
+        15% {
+            transform: rotateZ(10deg);
+        }
+
+        30% {
+            transform: rotateZ(-10deg);
+        }
+
+        45% {
+            transform: rotateZ(5deg);
+        }
+
+        60% {
+            transform: rotateZ(-5deg);
+        }
+
+        75% {
+            transform: rotateZ(2deg);
+        }
+    }
+
+    .button:active {
+        transform: scale(0.8);
+    }
+
+    // <button class="button"><svg viewBox="0 0 448 512" class="bell"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path></svg></button>
+}
+
+@mixin button-not-allowed {
+    .button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 15px 20px;
+        background-color: #212121;
+        border: none;
+        font: inherit;
+        color: #e8e8e8;
+        font-size: 20px;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: not-allowed;
+        overflow: hidden;
+        transition: all 0.3s ease cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .button span {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+    }
+
+    .button::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        translate: 0 105%;
+        background-color: #F53844;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .button svg {
+        width: 32px;
+        height: 32px;
+        fill: #F53844;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .button:hover {
+        animation: shake 0.2s linear 1;
+    }
+
+    .button:hover::before {
+        translate: 0 0;
+    }
+
+    .button:hover svg {
+        fill: #e8e8e8;
+    }
+
+    @keyframes shake {
+        0% {
+            rotate: 0deg;
+        }
+
+        33% {
+            rotate: 10deg;
+        }
+
+        66% {
+            rotate: -10deg;
+        }
+
+        100% {
+            rotate: 10deg;
+        }
+    }
+
+    // <button class="button"><span>Not allowed ! </span><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-miterlimit="2" stroke-linejoin="round" fill-rule="evenodd" clip-rule="evenodd"><path fill-rule="nonzero" d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 7.425 2.717-2.718c.146-.146.339-.219.531-.219.404 0 .75.325.75.75 0 .193-.073.384-.219.531l-2.717 2.717 2.727 2.728c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.384-.073-.53-.219l-2.729-2.728-2.728 2.728c-.146.146-.338.219-.53.219-.401 0-.751-.323-.751-.75 0-.192.073-.384.22-.531l2.728-2.728-2.722-2.722c-.146-.147-.219-.338-.219-.531 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"></path></svg></span></button>
+}
+
+@mixin button-bookmark {
+    button {
+        border: none;
+        display: flex;
+        padding: 0.75rem 1.5rem;
+        background-color: #488aec;
+        color: #ffffff;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: center;
+        text-transform: uppercase;
+        vertical-align: middle;
+        align-items: center;
+        border-radius: 0.5rem;
+        user-select: none;
+        gap: 0.75rem;
+        box-shadow: 0 4px 6px -1px #488aec31, 0 2px 4px -1px #488aec17;
+        transition: all 0.6s ease;
+    }
+
+    button:hover {
+        box-shadow: 0 10px 15px -3px #488aec4f, 0 4px 6px -2px #488aec17;
+    }
+
+    button:focus,
+    button:active {
+        opacity: 0.85;
+        box-shadow: none;
+    }
+
+    button svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    // <button><svg aria-hidden="true"
+    // stroke="currentColor"
+    // stroke-width="2"
+    // viewBox="0 0 24 24"
+    // fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    // ><path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+    // stroke-linejoin="round"
+    // stroke-linecap="round"
+    // ></path></svg>Add Bookmark </button>
+}
+
+
+@mixin button-editor {
+    .Btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100px;
+        height: 40px;
+        border: none;
+        padding: 0px 20px;
+        background-color: rgb(168, 38, 255);
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 5px 5px 0px rgb(140, 32, 212);
+        transition-duration: .3s;
+    }
+
+    .svg {
+        width: 13px;
+        position: absolute;
+        right: 0;
+        margin-right: 20px;
+        fill: white;
+        transition-duration: .3s;
+    }
+
+    .Btn:hover {
+        color: transparent;
+    }
+
+    .Btn:hover svg {
+        right: 43%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        transition-duration: .3s;
+    }
+
+    .Btn:active {
+        transform: translate(3px, 3px);
+        transition-duration: .3s;
+        box-shadow: 2px 2px 0px rgb(140, 32, 212);
+    }
+
+    // <button class="Btn">Edit <svg class="svg" viewBox="0 0 512 512"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path></svg></button>
+}
+
+@mixin button-delete {
+    .button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(20, 20, 20);
+        border: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+        cursor: pointer;
+        transition-duration: .3s;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .svgIcon {
+        width: 12px;
+        transition-duration: .3s;
+    }
+
+    .svgIcon path {
+        fill: white;
+    }
+
+    .button:hover {
+        width: 140px;
+        border-radius: 50px;
+        transition-duration: .3s;
+        background-color: rgb(255, 69, 69);
+        align-items: center;
+    }
+
+    .button:hover .svgIcon {
+        width: 50px;
+        transition-duration: .3s;
+        transform: translateY(60%);
+    }
+
+    .button::before {
+        position: absolute;
+        top: -20px;
+        content: "Delete";
+        color: white;
+        transition-duration: .3s;
+        font-size: 2px;
+    }
+
+    .button:hover::before {
+        font-size: 13px;
+        opacity: 1;
+        transform: translateY(30px);
+        transition-duration: .3s;
+    }
+
+    // <button class="button"><svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg></button>
+}
+
+
+
+@mixin button-go-back {
+    // <button type="button"
+    // class="bg-white text-center w-48 rounded-2xl h-14 relative font-sans text-black text-xl font-semibold group"
+    // ><div class="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500"
+    // ><svg width="25px"
+    // height="25px"
+    // viewBox="0 0 1024 1024"
+    // xmlns="http://www.w3.org/2000/svg"
+    // ><path fill="#000000"
+    // d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+    // ></path><path fill="#000000"
+    // d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+    // ></path></svg></div><p class="translate-x-2">Go Back</p></button>
+}
+
+@mixin button-like {
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 25px 20px 22px;
+        box-shadow: rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        background-color: #e8e8e8;
+        border-color: #ffe2e2;
+        border-style: solid;
+        border-width: 9px;
+        border-radius: 35px;
+        font-size: 25px;
+        cursor: pointer;
+        font-weight: 900;
+        color: rgb(134, 124, 124);
+        font-family: monospace;
+        transition: transform 400ms cubic-bezier(0.68, -0.55, 0.27, 2.5),
+            border-color 400ms ease-in-out, background-color 400ms ease-in-out;
+        word-spacing: -2px;
+    }
+
+    @keyframes movingBorders {
+        0% {
+            border-color: #fce4e4;
+        }
+
+        50% {
+            border-color: #ffd8d8;
+        }
+
+        90% {
+            border-color: #fce4e4;
+        }
+    }
+
+    button:hover {
+        background-color: #eee;
+        transform: scale(105%);
+        animation: movingBorders 3s infinite;
+    }
+
+    button svg {
+        margin-right: 11px;
+        fill: rgb(255, 110, 110);
+        transition: opacity 100ms ease-in-out;
+    }
+
+    .filled {
+        position: absolute;
+        opacity: 0;
+        top: 20px;
+        left: 22px;
+    }
+
+    @keyframes beatingHeart {
+        0% {
+            transform: scale(1);
+        }
+
+        15% {
+            transform: scale(1.15);
+        }
+
+        30% {
+            transform: scale(1);
+        }
+
+        45% {
+            transform: scale(1.15);
+        }
+
+        60% {
+            transform: scale(1);
+        }
+    }
+
+    button:hover .empty {
+        opacity: 0;
+    }
+
+    button:hover .filled {
+        opacity: 1;
+        animation: beatingHeart 1.2s infinite;
+    }
+
+    // <button><svg height="32"
+    // width="32"
+    // viewBox="0 0 24 24"
+    // xmlns="http://www.w3.org/2000/svg"
+    // class="empty"
+    // ><path d="M0 0H24V24H0z" fill="none"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"
+    // ></path></svg><svg xmlns="http://www.w3.org/2000/svg"
+    // viewBox="0 0 24 24"
+    // width="32"
+    // height="32"
+    // class="filled"
+    // ><path fill="none" d="M0 0H24V24H0z"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"
+    // ></path></svg>Like </button>
+}
+
+@mixin button-menu {
+    .btn {
+        width: 150px;
+        height: 50px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.5s ease-in-out;
+        font-size: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        background: #040f16;
+        color: #f5f5f5;
+    }
+
+    .btn:hover {
+        box-shadow: 0 0 20px 0px #2e2e2e3a;
+    }
+
+    .btn .icon {
+        position: absolute;
+        height: 40px;
+        width: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.5s;
+    }
+
+    .btn .text {
+        transform: translateX(55px);
+    }
+
+    .btn:hover .icon {
+        width: 175px;
+    }
+
+    .btn:hover .text {
+        transition: all 0.5s;
+        opacity: 0;
+    }
+
+    .btn:focus {
+        outline: none;
+    }
+
+    .btn:active .icon {
+        transform: scale(0.85);
+    }
+
+    // <button class="btn"><span class="icon"><svg viewBox="0 0 175 80" width="40" height="40"><rect width="80" height="15" fill="#f0f0f0" rx="10"></rect><rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect><rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect></svg></span><span class="text">MENU</span></button>
+}
+
+@mixin button-next {
+    // <div class="w-full h-40 flex items-center justify-center cursor-pointer"><div class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold shadow text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 dark:bg-gray-700 dark:text-white dark:hover:text-gray-200 dark:shadow-none group"
+    // ><span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"
+    // ></span><span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12"
+    // ><svg xmlns="http://www.w3.org/2000/svg"
+    // viewBox="0 0 24 24"
+    // stroke="currentColor"
+    // fill="none"
+    // class="w-5 h-5 text-green-400"
+    // ><path d="M14 5l7 7m0 0l-7 7m7-7H3"
+    // stroke-width="2"
+    // stroke-linejoin="round"
+    // stroke-linecap="round"
+    // ></path></svg></span><span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200"
+    // ><svg xmlns="http://www.w3.org/2000/svg"
+    // viewBox="0 0 24 24"
+    // stroke="currentColor"
+    // fill="none"
+    // class="w-5 h-5 text-green-400"
+    // ><path d="M14 5l7 7m0 0l-7 7m7-7H3"
+    // stroke-width="2"
+    // stroke-linejoin="round"
+    // stroke-linecap="round"
+    // ></path></svg></span><span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white dark:group-hover:text-gray-200"
+    // >Button</span></div></div>
+}
+
+@mixin button-delete {
+    button {
+        width: 150px;
+        height: 50px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        background: red;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+        background: #e62222;
+    }
+
+    button,
+    button span {
+        transition: 200ms;
+    }
+
+    button .text {
+        transform: translateX(35px);
+        color: white;
+        font-weight: bold;
+    }
+
+    button .icon {
+        position: absolute;
+        border-left: 1px solid #c41b1b;
+        transform: translateX(110px);
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    button svg {
+        width: 15px;
+        fill: #eee;
+    }
+
+    button:hover {
+        background: #ff3636;
+    }
+
+    button:hover .text {
+        color: transparent;
+    }
+
+    button:hover .icon {
+        width: 150px;
+        border-left: none;
+        transform: translateX(0);
+    }
+
+    button:focus {
+        outline: none;
+    }
+
+    button:active .icon svg {
+        transform: scale(0.8);
+    }
+
+
+    // <button class="noselect"><span class="text">Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>
+}
+

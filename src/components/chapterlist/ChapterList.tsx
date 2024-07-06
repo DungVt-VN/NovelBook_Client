@@ -3,6 +3,7 @@ import './ChapterList.scss';
 import { ChapterModel, ImagesModel } from '../../services/models/ChapterModel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faImage, faSquarePlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { useDropzone } from 'react-dropzone';
 import { uploadImageToDrive } from '../../services/utils/imageUploadService';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
@@ -27,12 +28,15 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
     const [isEdit, setIsEdit] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [uploaded, setUploaded] = useState(false);
-    const [chapter, setChapter] = useState<number | undefined>(undefined);
+    const [chapter, setChapter] = useState<number | string>('');
     const [title, setTitle] = useState<string>('');
     const { token } = useAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [bookChapters, setBookChapters] = useState<ChapterModel[]>([]);
+    const [onLoad, setOnLoad] = useState(false);
+    const [chapterId, setChapterId] = useState<number | null>(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,49 +58,29 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
         if (idBook && token) {
             fetchData();
         }
-    }, [idBook, token]);
-
-    if (loading) {
-        return (
-            <div className="p-4">
-                <button onClick={handleClose} className="bg-red-500 text-white px-4 py-2 rounded">Close</button>Loading...
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="p-4">
-                <button onClick={handleClose} className="bg-red-500 text-white px-4 py-2 rounded">Close</button>
-                <div>Error: {error}</div>
-            </div>
-        );
-    }
+    }, [idBook, token, onLoad]);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value); // Update state with input value
     };
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            const filesArray = Array.from(event.target.files);
-            const imageFiles = filesArray.filter(file => file.type.startsWith('image/'));
-            if (filesArray.length !== imageFiles.length) {
-                alert('Only images can be uploaded');
-            }
-            const newFiles = imageFiles.filter(
-                (file) => !images.some((image) => image.file.name === file.name && image.file.size === file.size)
-            );
-            const newImages = newFiles.map((file, index) => ({
-                id: nextId + index,
-                file,
-                url: URL.createObjectURL(file),
-                name: file.name,
-            }));
-
-            setImages((prevImages) => [...prevImages, ...newImages]);
-            setNextId((prevId) => prevId + newImages.length);
+    const handleFileChange = (files: File[]) => {
+        const imageFiles = files.filter(file => file.type.startsWith('image/'));
+        if (files.length !== imageFiles.length) {
+            alert('Only images can be uploaded');
         }
+        const newFiles = imageFiles.filter(
+            (file) => !images.some((image) => image.file.name === file.name && image.file.size === file.size)
+        );
+        const newImages = newFiles.map((file, index) => ({
+            id: nextId + index,
+            file,
+            url: URL.createObjectURL(file),
+            name: file.name,
+        }));
+
+        setImages((prevImages) => [...prevImages, ...newImages]);
+        setNextId((prevId) => prevId + newImages.length);
     };
 
     const handleDeleteImage = (id: number) => {
@@ -110,10 +94,16 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
     };
 
     const handleChapterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(event.target.value, 10); // Convert input value to number
+        const value = event.target.value;
 
-        if (!isNaN(value)) {
-            setChapter(value); // Update state with parsed number value
+        if (value === '') {
+            setChapter('');
+        } else {
+            const numberValue = parseInt(value, 10);
+
+            if (!isNaN(numberValue)) {
+                setChapter(numberValue);
+            }
         }
     };
 
@@ -188,21 +178,24 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
             } else {
                 console.error(response.data);
                 alert(response.data);
+                return;
             }
         } catch (error: unknown) {
             const err = error as ErrorResponse;
             alert(err.response?.data);
             console.error('Unexpected error:', error);
+            return;
         }
+        setTitle('');
+        setChapter('');
+        setImages([]);
+        setImageUrls([]);
+        setUploaded(false);
+        setOnLoad(!onLoad);
     };
 
-
-    // here
     const handleEditClick = async (event: React.MouseEvent<HTMLButtonElement>, item: ChapterModel) => {
         event.preventDefault();
-        setIsEdit(true);
-        setTitle(item.title);
-        setChapter(item.chapterNumber);
         try {
             const response = await axios.get(`${IMAGES_URL}/${item.chapterId}`, {
                 headers: {
@@ -221,12 +214,86 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
             console.log(response.data);
         } catch (error) {
             setError("Failed to fetch!");
+            alert("Failed to fetch!");
+            return;
         }
+        setIsEdit(true);
+        setTitle(item.title);
+        setChapter(item.chapterNumber);
+        setChapterId(item.chapterId);
     }
 
     const handleSaveClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        if (!title || imageUrls.length === 0) {
+            alert('Please fill in all required fields (Title, Chapter, and Images)');
+            return;
+        }
+        try {
+            const data = {
+                ChapterId: chapterId,
+                MangaId: idBook,
+                Title: title,
+                ChapterNumber: chapter,
+                Images: imageUrls,
+                Viewed: 0,
+                PublishedDate: new Date().toISOString(),
+            };
+            const response = await axios.post(
+                `${CHAPTER_URL}/update`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            if (response.status === 200) {
+                alert(response.data);
+            } else {
+                console.error(response.data);
+                alert(response.data);
+                return;
+            }
+        } catch (error: unknown) {
+            const err = error as ErrorResponse;
+            alert(err.response?.data);
+            console.error('Unexpected error:', error);
+            return;
+        }
+
+        setTitle('');
+        setChapter('');
+        setImages([]);
+        setImageUrls([]);
+        setOnLoad(!onLoad);
+        setUploaded(false);
         setIsEdit(false);
+    }
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop: acceptedFiles => handleFileChange(acceptedFiles),
+        accept: {
+            'image/*': []
+        }
+    });
+
+    if (loading) {
+        return (
+            <div className="p-4">
+                <button onClick={handleClose} className="bg-red-500 text-white px-4 py-2 rounded">Close</button>Loading...
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="p-4">
+                <button onClick={handleClose} className="bg-red-500 text-white px-4 py-2 rounded">Close</button>
+                <div>Error: {error}</div>
+            </div>
+        );
     }
 
     return (
@@ -268,15 +335,14 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                     <div className='flex-grow p-4 rounded-lg shadow-lg ml-2'>
                         <div className='flex flex-col h-full'>
                             {/* Form Section */}
                             <div className='inline-flex w-full bg-green-200 shadow-lg p-2 rounded-md'>
-                                <label htmlFor="chapter" className='mr-3 ml-1'>
-                                    <input type="number" placeholder="Chapter" name='chapter' value={chapter} onChange={handleChapterChange} className='w-20 pl-3 p-1 rounded-md' required />
+                                <label htmlFor="chapter" className='mr-3 ml-1 text-gray-600'>
+                                    <input type="number" placeholder="Chapter" name='chapter' value={chapter} onChange={handleChapterChange} className='ml-2 w-20 pl-3 p-1 rounded-md' required />
                                 </label>
                                 <label htmlFor="title">
                                     <input type="text" name='title' className='w-80 p-1 rounded-md pl-3' value={title} onChange={handleTitleChange} placeholder='Title of chapter' />
@@ -287,41 +353,35 @@ const ChapterList: React.FC<{ handleClose: () => void; idBook?: number; bookName
                             </div>
 
                             {/* Content Area */}
-                            <div className="flex-grow bg-yellow-300 p-3 my-3 rounded-lg overflow-y-auto justify-center relative">
-                                {/* Lớp phủ và hiệu ứng loading */}
-                                {uploading && (
-                                    <div className="absolute top-0 left-0 w-full h-full bg-gray-700 opacity-50 flex items-center justify-center">
-                                        <p className="text-white">Uploading...</p>
+                            <div {...getRootProps()} className={`flex-grow bg-yellow-300 p-3 my-3 rounded-lg overflow-y-auto justify-center relative ${isDragActive ? 'border-2 border-blue-500' : ''}`}>
+                                <input {...getInputProps()} />
+                                {isDragActive ? (
+                                    <p className="text-center">Drop the files here ...</p>
+                                ) : (
+                                    <div className="text-center">
+                                        <p>Drag 'n' drop some files here, or click to select files</p>
+                                        <div className="container mx-auto p-4 flex justify-center">
+                                            <div className="flex flex-wrap w-[560px]">
+                                                {images && images.map((image) => (
+                                                    <div key={image.id} className="relative m-2">
+                                                        <div className="w-[150px] truncate">{image.file.name}</div>
+                                                        <img
+                                                            src={image.url}
+                                                            alt={image.file.name}
+                                                            className="w-[165px] h-60 object-cover border rounded-lg shadow-slate-200"
+                                                        />
+                                                        <button
+                                                            onClick={() => handleDeleteImage(image.id)}
+                                                            className="absolute top-0 right-0 w-7 bg-red-500 text-white rounded-full p-1"
+                                                        >
+                                                            &times;
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
-
-                                <div className="container mx-auto p-4 flex justify-center">
-                                    <input
-                                        type="file"
-                                        multiple
-                                        onChange={handleFileChange}
-                                        ref={fileInputRef}
-                                        className="hidden"
-                                    />
-                                    <div className="flex flex-wrap w-[560px]">
-                                        {images && images.map((image) => (
-                                            <div key={image.id} className="relative m-2">
-                                                <div className="w-[150px] truncate">{image.file.name}</div>
-                                                <img
-                                                    src={image.url}
-                                                    alt={image.file.name}
-                                                    className="w-[165px] h-60 object-cover border rounded-lg shadow-slate-200"
-                                                />
-                                                <button
-                                                    onClick={() => handleDeleteImage(image.id)}
-                                                    className="absolute top-0 right-0 w-7 bg-red-500 text-white rounded-full p-1"
-                                                >
-                                                    &times;
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

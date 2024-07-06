@@ -8,12 +8,13 @@ import Footer from '../components/layout/footer/Footer';
 import NotFound from '../pages/notFound/NotFound';
 import useAuth from '../hooks/useAuth';
 import AdminNavbar from '../components/adminnavbar/AdminNavbar';
+import Example from '../components/navbar/TestNav';
 
 const Routing = () => {
   const { isAuthenticated, roles, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>; // Hoặc một component loading tùy chỉnh
+    return <div>Loading...</div>;
   }
 
   const isAdmin = roles.includes('Admin');
@@ -24,11 +25,14 @@ const Routing = () => {
       <div id='set'>
         {admin ? <AdminNavbar /> : (
           <>
-            <Navbar />
-            <Header />
+            <Example />
+            {/* <Header /> */}
           </>
         )}
-        <div className="container mx-auto p-4 bg-slate-500/50">
+        <div
+          className="container mx-auto p-4 bg-slate-500/50"
+          style={{ height: `calc(100vh - 184px)` }}
+        >
           <Routes>
             {RouteConfig.map((route, index) => {
               const RouteElement = route.component;

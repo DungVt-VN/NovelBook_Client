@@ -1,0 +1,38 @@
+.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select select {
+    display: none;
+}
+
+.select-selected {
+    background-color: #5f2222;
+    padding: 10px;
+    margin-left: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.select-items {
+    border-radius: 20px;
+    color: black;
+    position: absolute;
+    background-color: white;
+    max-height: 100px;
+    /* Điều chỉnh chiều cao */
+    overflow-y: auto;
+    z-index: 99;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.select-items div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.select-items div:hover {
+    background-color: #f1f1f1;
+}

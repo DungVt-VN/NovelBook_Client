@@ -11,7 +11,9 @@
         "ignore": [
           "font-synthesis",
           "user-select",
-          "backdrop-filter"
+          "backdrop-filter",
+          "translate",
+          "rotate"
         ]
       }
     ],
