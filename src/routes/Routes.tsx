@@ -25,7 +25,8 @@ const Routing = () => {
       <div id='set'>
         {admin ? <AdminNavbar /> : (
           <>
-            <Example />
+            <Navbar />
+            <Header />
             {/* <Header /> */}
           </>
         )}
