@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
           ) : (
             <div className='auth-link'>
               <Logout />
-              
+
             </div>
           )
           }

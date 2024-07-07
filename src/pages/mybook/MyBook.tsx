@@ -177,7 +177,7 @@ const MyBook: React.FC = () => {
                 .filter((value) => typeof value === 'number') // filter only number values
                 .map((value) => (
                   <option key={value} value={value}>
-                    {BookStatusEnum[value as keyof typeof BookStatusEnum]}
+                    {BookStatusEnum[value as unknown as keyof typeof BookStatusEnum]}
                   </option>
                 ))}
             </select>
@@ -196,7 +196,7 @@ const MyBook: React.FC = () => {
                 .filter((value) => typeof value === 'number') // filter only number values
                 .map((value) => (
                   <option key={value} value={value}>
-                    {SortBy[value as keyof typeof SortBy]}
+                    {SortBy[value as unknown as keyof typeof SortBy]}
                   </option>
                 ))}
             </select>

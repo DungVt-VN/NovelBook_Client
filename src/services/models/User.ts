@@ -6,5 +6,6 @@ export default interface User {
     phoneNumber: string;
     lockoutEnd: number;
     roles: string[];
+    isChanged: number;
   }
   

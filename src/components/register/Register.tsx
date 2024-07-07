@@ -146,7 +146,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onLogin }) => {
               if (message === 'DuplicateUserName') {
                 setErrMsg('Username đã tồn tại');
               } else {
-                setErrMsg('Email đã tồn tại');
+                setErrMsg('Email hoặc UserName đã tồn tại');
               }
               break;
           }

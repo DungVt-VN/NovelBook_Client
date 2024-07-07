@@ -57,7 +57,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onConfir
           <option value="true">Confirmed</option>
           <option value="false">Not Confirmed</option>
         </select>
-        <select value={filterRole} onChange={handleRoleFilterChange} className='p-2'> 
+        <select value={filterRole} onChange={handleRoleFilterChange} className='p-2'>
           <option value="">Filter by Role</option>
           <option value="Admin">Admin</option>
           <option value="User">User</option>

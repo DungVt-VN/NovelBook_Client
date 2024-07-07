@@ -41,19 +41,19 @@ const EditUser: React.FC<EditUserProps> = ({ user, onSubmit, onCancel }) => {
 
     const handleSubmitEdit = async (updatedUser: User) => {
         if (isNaN(updatedUser.lockoutEnd)) {
-            updatedUser.emailConfirmed = false;
+            updatedUser.isChanged = 0;
         } else {
-            updatedUser.emailConfirmed = true;
+            updatedUser.isChanged = formValues.lockoutEnd;
         }
-        if(updatedUser.emailConfirmed === null) {
-            updatedUser.emailConfirmed = false;
+        if (updatedUser.isChanged === null) {
+            updatedUser.isChanged = 0;
         }
 
         const data = {
             id: updatedUser.id,
             userName: updatedUser.userName,
             email: updatedUser.email,
-            emailConfirmed: updatedUser.emailConfirmed,
+            emailConfirmed: updatedUser.isChanged,
             phoneNumber: updatedUser.phoneNumber !== null ? updatedUser.phoneNumber : '',
             roles: updatedUser.roles,
         };
